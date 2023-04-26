@@ -21,7 +21,7 @@ gem install rails
 ```
 
 ## Web scraping - Each script returns some usefull infomation that you need
-
+* `getLatestVersionOfAppOnGitHub.rb` This Ruby CLI app will returns latest version and releases date when input github link of that application
 
 ## Gems Used
 * [Ruby Rails](https://rubygems.org/gems/rails) - Ruby gem for full-stack web development
