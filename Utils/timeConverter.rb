@@ -10,8 +10,8 @@ def show_help
         Default output representation is 'MM/DD/YYYY'
 
         Example usage:
-            ruby convertTime.rb "2023-04-17" "%Y-%m-%d" "%m/%d/%Y"    ===>  Output will be: 04/17/2023
-            ruby convertTime.rb "January 17, 2023" "%B %d, %Y" "%d-%m-%Y"  ===>  Output will be: 17-01-2023
+            ruby convertTime.rb "2023-04-17" -i "%Y-%m-%d" -o "%m/%d/%Y"    ===>  Output will be: 04/17/2023
+            ruby convertTime.rb "January 17, 2023" -i "%B %d, %Y" -o "%d-%m-%Y"  ===>  Output will be: 17-01-2023
 
         How I format data:
             Formats date according to the directives in the given format string.
@@ -198,7 +198,7 @@ require 'date'
     @param: outputFormat The Input format is actually a regex and should be treated as such
     @return: String that match contents or return 0
 =end
-	def ConvertTimeString(strTime, inputFormat = "%m/%d/%Y", outputFormat = "%m/%d/%Y")
+	def TimeConverter.ConvertTimeString(strTime, inputFormat, outputFormat)
 		begin
 			_output = 0
 			
@@ -222,13 +222,12 @@ show_help if ARGV.empty?
 while arg = ARGV.shift do
     case arg
         when "--help" then show_help; exit
-        when "-i" || "--input" then @inputFormat = ARGV.shift.to_s
-        when "-o" || "--output" then @outputFormat = ARGV.shift.to_s
-        else @strTime << arg
+        when "-i" || "--input" then @inputFormat = ARGV.shift.to_s.gsub('"', '')
+        when "-o" || "--output" then @outputFormat = ARGV.shift.to_s.gsub('"', '')
+        else @strTime << arg.gsub('"', '')
     end
 end
 
 puts TimeConverter.ConvertTimeString(@strTime, @inputFormat, @outputFormat)
-# encoding: UTF-8
 
 
