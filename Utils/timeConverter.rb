@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
-# This Ruby CLI app will returns latest version and releases date when input github link of that application
+# This Ruby CLI app for Time conversion
+
+# gem install date
+require 'date'
 
 def show_help
     puts <<~TEXT
@@ -189,8 +192,6 @@ def show_help
     TEXT
 end
 
-module TimeConverter
-require 'date'
 =begin
     @param: strTime String That need to be parse
     @param: inputFormat  The Input format is actually a regex and should be treated as such. 
@@ -198,36 +199,34 @@ require 'date'
     @param: outputFormat The Input format is actually a regex and should be treated as such
     @return: String that match contents or return 0
 =end
-	def TimeConverter.ConvertTimeString(strTime, inputFormat, outputFormat)
-		begin
-			_output = 0
-			
-			if inputFormat.match(/unix/i) then inputFormat = '%s' end
-			if inputFormat.match(/epoch/i) then inputFormat = '%Q' end
-			if outputFormat.match(/epoch|unix/i) then outputFormat = '%Q' end
+def ConvertTimeString(strTime, inputFormat, outputFormat)
+    begin
+        output = 0
+        
+        if inputFormat.match(/unix/i) then inputFormat = '%s' end
+        if inputFormat.match(/epoch/i) then inputFormat = '%Q' end
+        if outputFormat.match(/epoch|unix/i) then outputFormat = '%Q' end
 
-			_output = DateTime.strptime(strTime, outputFormat).strftime(outputFormat)
+        output = DateTime.strptime(strTime, outputFormat).strftime(outputFormat)
 
-			return _output
-		rescue => err
-			return 0
-		end
-	end
+        return output
+    rescue => err
+        return 0
+    end
 end
 
-@strTime = String.new
-@inputFormat, @outputFormat = String.new, String.new
+strTime, inputFormat, outputFormat = String.new, String.new, String.new
 
 show_help if ARGV.empty?
 while arg = ARGV.shift do
     case arg
         when "--help" then show_help; exit
-        when "-i" || "--input" then @inputFormat = ARGV.shift.to_s.gsub('"', '')
-        when "-o" || "--output" then @outputFormat = ARGV.shift.to_s.gsub('"', '')
-        else @strTime << arg.gsub('"', '')
+        when "-i" || "--input" then inputFormat = ARGV.shift.to_s
+        when "-o" || "--output" then outputFormat = ARGV.shift.to_s
+        else strTime << arg
     end
 end
 
-puts TimeConverter.ConvertTimeString(@strTime, @inputFormat, @outputFormat)
+puts ConvertTimeString(strTime, inputFormat, outputFormat)
 
 

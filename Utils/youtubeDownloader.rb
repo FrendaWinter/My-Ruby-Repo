@@ -2,4 +2,4 @@
 
 # Still in development
 
-# CLI App the return mp4 file of Youtube link
+# CLI App the return mp4/mp3 file of Youtube link
