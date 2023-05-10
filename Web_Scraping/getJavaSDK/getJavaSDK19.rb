@@ -1,0 +1,3 @@
+@urls << { desc: productString + ' - Windows x64 Compressed Archive', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.zip" }
+@urls << { desc: productString + ' - Windows x64 Installer', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.exe" }
+@urls << { desc: productString + ' - Windows x64 MSI Installer', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.msi" }
