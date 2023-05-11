@@ -2,14 +2,19 @@ require 'json'
 require 'nokogiri'
 require 'restclient'
 
+def show_help
+    puts <<~TEXT
+        
+		Just: ruby getJavaSDK16.rb
+
+		--- That all of it, Have Fun!! ----
+
+    TEXT
+end
+
 productString = 'Java Development Kit 16 for windows'
 @home_page = "https://www.oracle.com"
 @urls = Array.new
-
-# Initialize
-timestamp = Time.now
-puts "\n#{productString}: Starting #{productString} Collection:"
-puts "#{productString}: Timestamp: #{timestamp}"
 
 # Get the latest version
 url = "#{@home_page}/java/technologies/javase/16all-relnotes.html"
@@ -44,15 +49,15 @@ end
 
 @urls << { desc: productString, link: "#{@home_page}/java/technologies/javase/jdk16-archive-downloads.html" }
 
-outResult = {
+@outResult = {
 	:'description' => productString,
 	:'date' => date,
-	:'version' => version
+	:'version' => version,
+	:'timestamp' => Time.now
 }
 
 if @urls.length > 0
-	outResult[:'downloadInfo'] = {:'minFileSize' => 180 * 1024 *1024, :'downloadDetails' => @urls}
+	@outResult[:'downloadInfo'] = {:'downloadDetails' => @urls}
 end
 
-puts "#{productString.capitalize}: Result: #{outResult}"
-puts "#{productString.capitalize}: Result: Run complete"
+puts JSON.pretty_generate(@outResult)

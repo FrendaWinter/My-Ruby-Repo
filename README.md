@@ -17,12 +17,18 @@
 </div>
 <br></br>
 
-## Contents
+# 📖 Table of Contents
 
+- [🔥 Features](#-features)
   - [Utils script](#utils-script)
   - [Web scraping](#web-scraping)
-  - [Gems Used](#gems-used)
-  - [FAQ / Contact](#faq--contact)
+- [🏗️ How to Set up `fwScript`](#️-how-to-set-up-fwscript)
+  - [Gem used](#gem-used)
+- [🛡️ License](#️-license)
+- [🙏 Support](#-support)
+  - [☎️ FAQ / Contact](#️-faq--contact)
+
+---
 
 # 🔥 Features
 
@@ -43,17 +49,26 @@
 * `getLatestVersionOfAppOnGitHub.rb` ~ CLI app will returns latest version and releases date when input github link of that application
 * `getJavaSDK` ~ CLI apps will returns latest version, releases date, download link of latest Java SDK
   
-# 🏗️ How to Set up `TryShape`
+---
+
+# 🏗️ How to Set up `fwScript`
+
+```ruby
+gem install bundler
+bundler install
+```
+
+## Gem used
 
 * [Ruby Rails](https://rubygems.org/gems/rails) ~ Ruby gem for full-stack web development
 * [Basic Yahoo Finance](https://github.com/towards/basic_yahoo_finance)
 
-```ruby
-gem install rails
-```
+---
 
 # 🛡️ License
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
+
+---
 
 # 🙏 Support
 
@@ -67,5 +82,5 @@ If you found the app helpful, consider supporting us with a coffee.
 
 ---
 
-## FAQ / Contact
+## ☎️ FAQ / Contact
 * If you run into any issues, please open an issue ASAP and we'll work on it ASAP to resolve it.

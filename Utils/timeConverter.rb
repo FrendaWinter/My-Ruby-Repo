@@ -15,6 +15,8 @@ def show_help
             ruby timeConverter.rb '2023-04-17' -i '%Y-%m-%d' -o '%m/%d/%Y'    ===>  Output will be: 04/17/2023
             ruby timeConverter.rb 'January 17, 2023' -i '%B %d, %Y' -o '%d-%m-%Y'  ===>  Output will be: 17-01-2023
 
+            ----  Please use single quotes :)) ------
+
         How I format data:
             Formats date according to the directives in the given format string.
                 The directives begins with a percent (%Q( character.
@@ -196,9 +198,9 @@ end
     @param: inputFormat  The Input format is actually a regex and should be treated as such. 
                             To read in a unix/epoch time stamp simply pass in the string 'epoch' as the input format. It will return the time in GMT
     @param: outputFormat The Input format is actually a regex and should be treated as such
-    @return: String that match contents or return 0
+    @return: String that match contents or return error message
 =end
-def ConvertTimeString(strTime, inputFormat, outputFormat)
+def ConvertTimeString(strTime, inputFormat, outputFormat = '%m/%d/%Y')
     begin
         output = 0
         
@@ -210,7 +212,7 @@ def ConvertTimeString(strTime, inputFormat, outputFormat)
 
         return output
     rescue => err
-        return 0
+        return 'Error: ' + err.message
     end
 end
 
