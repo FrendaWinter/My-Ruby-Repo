@@ -18,7 +18,8 @@ def show_help
     puts "Example:"
     puts "    Normal usage: getLatestVersionOfAppOnGitHub.rb https://github.com/keepassxreboot/keepassxc"
     puts "    Get output into file at current folder: getLatestVersionOfAppOnGitHub.rb https://github.com/keepassxreboot/keepassxc -o ./output.json"
-    puts "    Multiple link: getLatestVersionOfAppOnGitHub.rb https://github.com/keepassxreboot/keepassxc https://github.com/atom/atom -o /home/test/output.json" 
+    puts "    Multiple link: getLatestVersionOfAppOnGitHub.rb https://github.com/keepassxreboot/keepassxc https://github.com/atom/atom -o /home/test/output.json"
+    puts
 end
 
 show_help if ARGV.empty?
@@ -31,26 +32,32 @@ while arg = ARGV.shift do
 end
 
 def findVersionAndDate(url)
-    version, date = String.new, String.new
-    outResult = { :'products' => url.split('/').last.capitalize }
-    # Get the latest version and date from the web
-    htmlContent = Nokogiri::HTML(RestClient.get(url))
-    htmlContent.css('a.Link--primary').each {
-        |a|
-        if a.inner_html =~ /Latest/
-            version = a['href'].match(/(\d+\.\d+\.\d+|\d+\.\d+|\d+\.\d+\.\d+\.\d+)/).to_s
-            date = a.inner_html.match(/\D{3}\s(?:\d{1}|\d{2}),\s\d{4}/).to_s
+    begin
+        version, date = String.new, String.new
+        outResult = { :'products' => url.split('/').last.capitalize }
+        # Get the latest version and date from the web
+        htmlContent = Nokogiri::HTML(RestClient.get(url))
+        htmlContent.css('a.Link--primary').each {
+            |a|
+            if a.inner_html =~ /Latest/
+                version = a['href'].match(/(\d+\.\d+\.\d+|\d+\.\d+|\d+\.\d+\.\d+\.\d+)/).to_s
+                date = a.inner_html.match(/\D{3}\s(?:\d{1}|\d{2}),\s\d{4}/).to_s
+            end
+        }
+        if version.empty? || date.empty?
+            # Return error if can't find version or date
+            outResult[:'error'] = "Can't find version or date of this product"
+            return outResult
+        else
+            outResult[:'version'] = version
+            outResult[:'date'] = date
+            return outResult
         end
-    }
-    if version.empty? || date.empty?
-        # Return error if can't find version or date
-        outResult[:'error'] = "Can't find version or date of this product"
-        return outResult
-    else
-        outResult[:'version'] = version
-        outResult[:'date'] = date
+    rescue => err
+        outResult[:'error'] = err.message
         return outResult
     end
+    
 end
 
 @Result = Array.new
@@ -60,7 +67,7 @@ end
     @Result << findVersionAndDate(url)
 }
 
-if @outputPath.nil?
+if @outputPath.empty?
     puts JSON.pretty_generate(@Result)
 else
     begin
