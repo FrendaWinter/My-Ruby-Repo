@@ -9,12 +9,11 @@ def show_help
         Description: Takes a string with a time representation and outputs a string with a time representation,
                     in the process converting the one representation to another.
 
-        Default input representation is 'MM/DD/YYYY'
         Default output representation is 'MM/DD/YYYY'
 
         Example usage:
-            ruby convertTime.rb "2023-04-17" -i "%Y-%m-%d" -o "%m/%d/%Y"    ===>  Output will be: 04/17/2023
-            ruby convertTime.rb "January 17, 2023" -i "%B %d, %Y" -o "%d-%m-%Y"  ===>  Output will be: 17-01-2023
+            ruby timeConverter.rb '2023-04-17' -i '%Y-%m-%d' -o '%m/%d/%Y'    ===>  Output will be: 04/17/2023
+            ruby timeConverter.rb 'January 17, 2023' -i '%B %d, %Y' -o '%d-%m-%Y'  ===>  Output will be: 17-01-2023
 
         How I format data:
             Formats date according to the directives in the given format string.
@@ -207,7 +206,7 @@ def ConvertTimeString(strTime, inputFormat, outputFormat)
         if inputFormat.match(/epoch/i) then inputFormat = '%Q' end
         if outputFormat.match(/epoch|unix/i) then outputFormat = '%Q' end
 
-        output = DateTime.strptime(strTime, outputFormat).strftime(outputFormat)
+        output = DateTime.strptime(strTime, inputFormat).strftime(outputFormat)
 
         return output
     rescue => err

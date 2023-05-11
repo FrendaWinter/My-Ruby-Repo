@@ -42,7 +42,9 @@ if date.nil?
 	exit false
 end
 
-@urls << { desc: productString, link: "#{@home_page}/java/technologies/javase/jdk19-archive-downloads.html" }
+@urls << { desc: productString + ' - Windows x64 Compressed Archive', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.zip" }
+@urls << { desc: productString + ' - Windows x64 Installer', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.exe" }
+@urls << { desc: productString + ' - Windows x64 MSI Installer', link: "https://download.oracle.com/java/19/archive/jdk-#{version}_windows-x64_bin.msi" }
 
 outResult = {
 	:'description' => productString,
