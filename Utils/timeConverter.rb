@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 # This Ruby CLI app for Time conversion
 
 # gem install date

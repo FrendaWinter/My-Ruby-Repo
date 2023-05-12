@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem 'rails', '~> 7.0', '>= 7.0.4.3'
+gem 'rest-client', '~> 1.8'
+gem 'basic_yahoo_finance'

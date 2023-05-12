@@ -1,32 +1,32 @@
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 <div align="center">
 
 ![Imgur](https://i.imgur.com/PZjUHDE.png)
 
-# fwScript
+<h1> fwScript </h1>
 
-### This repo is A collection of my useful scripts for command line lover.
+<h2>This repo is A collection of my useful scripts for command line lover.</h2>
+<br></br>
 
 [![Language](https://img.shields.io/badge/language-Ruby-red.svg)]()
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
-### Web scraping/Utils script
 
 </div>
 <br></br>
 
-# 📖 Table of Contents
+<h2> 📖 Table of Contents </h2>
 
 - [🔥 Features](#-features)
   - [Utils script](#utils-script)
-  - [Web scraping](#web-scraping)
+  - [Data Collecting](#data-collecting)
 - [🏗️ How to Set up `fwScript`](#️-how-to-set-up-fwscript)
   - [Gem used](#gem-used)
 - [🛡️ License](#️-license)
 - [🙏 Support](#-support)
-  - [☎️ FAQ / Contact](#️-faq--contact)
+- [☎️ FAQ / Contact](#️-faq--contact)
 
 ---
 
@@ -42,9 +42,9 @@
 * `timeConverter.rb` ~ This Ruby CLI app for Time conversion
 * `youtubeDownloader.rb` ~ CLI App the return mp4 file of Youtube link
 
-## Web scraping
+## Data Collecting
 
-**Each script returns some usefull infomation that you need**
+**Each script returns some usefull infomation that you need from the web**
 
 * `getLatestVersionOfAppOnGitHub.rb` ~ CLI app will returns latest version and releases date when input github link of that application
 * `getJavaSDK` ~ CLI apps will returns latest version, releases date, download link of latest Java SDK
@@ -82,5 +82,5 @@ If you found the app helpful, consider supporting us with a coffee.
 
 ---
 
-## ☎️ FAQ / Contact
+# ☎️ FAQ / Contact
 * If you run into any issues, please open an issue ASAP and we'll work on it ASAP to resolve it.
