@@ -71,7 +71,7 @@ if @outputPath.empty?
     puts JSON.pretty_generate(@Result)
 else
     begin
-        File.write(@outputPath, @Result)
+        File.write(@outputPath, JSON.pretty_generate(@Result))
     rescue Errno::ENOENT => e
         puts "Error: #{e.message}"
     end

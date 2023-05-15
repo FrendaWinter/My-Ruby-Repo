@@ -5,43 +5,70 @@
 require 'net/http'
 require 'json'
 
-# API endpoint for OpenWeatherMap
-uri = URI('https://api.openweathermap.org/data/2.5/weather')
+def show_help
+    puts
+    puts "This Ruby CLI app will returns the weather information of the input city name"
+    puts
+    puts "--help          Show help message"
+    puts "-c, --city      City Name"
+    puts
+    puts "Example:"
+    puts "    Normal usage: ruby getWeather.rb -c 'London' -c 'Ho Chi Minh' -c 'New York'"
+    puts
+end
 
-# Links: https://openweathermap.org/current#name
-# API key for OpenWeatherMap (you can get one for free by signing up on their website)
-api_key = '00000000000000000000000000000' # Your API key
+def getWeather(city)
+  # API endpoint for OpenWeatherMap
+  uri = URI('https://api.openweathermap.org/data/2.5/weather')
 
-# Get the name of the city name from the user
-print 'Enter the name of the city name: '
-cityName = gets.chomp.downcase
+  # API key for OpenWeatherMap (you can get one for free by signing up on their website)
+  api_key = '0203b5dcb72b8a7d86c52e1a9bfe433b' # Your API key
+  # Construct the API request URL with the city name name and API key
 
-# Construct the API request URL with the city name name and API key
-uri.query = URI.encode_www_form({
-  q: cityName,
-  appid: api_key,
-  units: 'imperial' # Use imperial units (e.g. Fahrenheit) instead of metric
-})
+  uri.query = URI.encode_www_form({
+    q: city,
+    appid: api_key,
+    units: 'imperial' # Use imperial units (e.g. Fahrenheit) instead of metric
+  })
 
-# Send the API request and parse the response
-res = Net::HTTP.get_response(uri)
-data = JSON.parse(res.body)
-
-# Check if the API request was successful
-if data['cod'] == 200
-  # Extract the weather information from the API response
-  temperature = data['main']['temp']
-  description = data['weather'][0]['description']
-  humidity = data['main']['humidity']
-  wind_speed = data['wind']['speed']
+  # Send the API request and parse the response
+  res = Net::HTTP.get_response(uri)
+  data = JSON.parse(res.body)
   
-  # Print the weather information to the console
-  puts "Current weather in #{cityName.capitalize}:"
-  puts "Temperature: #{temperature}°F"
-  puts "Description: #{description}"
-  puts "Humidity: #{humidity}%"
-  puts "Wind Speed: #{wind_speed} mph"
-else
-  # Print an error message if the API request failed
-  puts "Error: #{data['message']}"
+  outResult, result = {}, {}
+  # Check if the API request was successful
+  if data['cod'] == 200
+    # Extract the weather information from the API response
+    outResult[:'temperature'] = data['main']['temp']
+    outResult[:'description'] = data['weather'][0]['description']
+    outResult[:'humidity'] = data['main']['humidity']
+    outResult[:'wind_speed'] = data['wind']['speed']
+    result[:"#{city}"] = outResult
+    
+    return result
+  else
+    # Return error message if the API request failed
+    outResult[:'Error'] = data['message']
+    result[:"#{city}"] = outResult
+    return result
+  end
+end
+
+@city = String.new
+
+show_help if ARGV.empty?
+while arg = ARGV.shift do
+    case arg
+        when "--help" then show_help; exit
+        when "-c" || "--city" then 
+          begin
+            @city = ARGV.shift.to_s
+            puts JSON.pretty_generate(getWeather(@city))
+          end
+        else 
+          begin 
+            puts "Invalid argument"
+            exit false
+          end
+    end
 end
