@@ -217,18 +217,16 @@ def ConvertTimeString(strTime, inputFormat, outputFormat = '%m/%d/%Y')
     end
 end
 
-strTime, inputFormat, outputFormat = String.new, String.new, String.new
+@strTime, @inputFormat, @outputFormat = String.new, String.new, String.new
 
 show_help if ARGV.empty?
 while arg = ARGV.shift do
     case arg
         when "--help" then show_help; exit
-        when "-i" || "--input" then inputFormat = ARGV.shift.to_s
-        when "-o" || "--output" then outputFormat = ARGV.shift.to_s
-        else strTime << arg
+        when "-i" || "--input" then @inputFormat = ARGV.shift.to_s
+        when "-o" || "--output" then @outputFormat = ARGV.shift.to_s
+        else @strTime << arg
     end
 end
 
-puts ConvertTimeString(strTime, inputFormat, outputFormat)
-
-
+puts ConvertTimeString(@strTime, @inputFormat, @outputFormat)

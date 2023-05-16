@@ -26,7 +26,7 @@ show_help if ARGV.empty?
 while arg = ARGV.shift do
     case arg
         when "--help" then show_help; exit
-        when "-o" || "--output" then @outputPath = ARGV.shift.to_s
+        when "-o", "--output" then @outputPath = ARGV.shift.to_s
         else @urls << arg
     end
 end
