@@ -36,9 +36,6 @@
 
 * `currencyConverter.rb` ~ CLI app for currency conversion
 * `getVersionFromFile.rb` ~ CLI app that return file version when you input the download link or file path
-* `getWeather.rb` ~ CLI app will returns the weather information of the input city name
-* `movieSearch.rb` ~ CLI app that searched movies and returns info
-* `stockSearch.rb` ~ CLI app that searches stock info.
 * `timeConverter.rb` ~ This Ruby CLI app for Time conversion
 * `youtubeDownloader.rb` ~ CLI App the return mp4 file of Youtube link
 
@@ -48,6 +45,9 @@
 
 * `getLatestVersionOfAppOnGitHub.rb` ~ CLI app will returns latest version and releases date when input github link of that application
 * `getJavaSDK` ~ CLI apps will returns latest version, releases date, download link of latest Java SDK
+* `getWeather.rb` ~ CLI app will returns the weather information of the input city name
+* `movieSearch.rb` ~ CLI app that searched movies and returns info
+* `stockSearch.rb` ~ CLI app that searches stock info.
   
 ---
 
@@ -61,7 +61,6 @@ bundler install
 ## Gem used
 
 * [Ruby Rails](https://rubygems.org/gems/rails) ~ Ruby gem for full-stack web development
-* [Basic Yahoo Finance](https://github.com/towards/basic_yahoo_finance)
 
 ---
 
