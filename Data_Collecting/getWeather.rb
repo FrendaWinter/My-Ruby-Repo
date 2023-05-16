@@ -11,9 +11,12 @@ def show_help
     puts
     puts "--help          Show help message"
     puts "-c, --city      City Name"
+    puts "To make it more precise put the city's name, comma, 2-letter country code (ISO3166). You will get all proper cities in chosen country."
+    puts "The order is important - the first is city name then comma then country. Example - 'London,GB' or 'New York,US'"
     puts
     puts "Example:"
-    puts "    Normal usage: ruby getWeather.rb -c 'London' -c 'Ho Chi Minh' -c 'New York'"
+    puts "    Normal usage: ruby getWeather.rb --c 'London' --c 'Ho Chi Minh' --c 'New York'"
+    puts "    With country code: ruby getWeather.rb --city 'London,GB'"
     puts
 end
 
