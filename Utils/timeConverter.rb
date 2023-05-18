@@ -2,7 +2,6 @@
 
 # This Ruby CLI app for Time conversion
 
-# gem install date
 require 'date'
 
 def show_help

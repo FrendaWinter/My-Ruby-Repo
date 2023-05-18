@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-# Still in development
-
 # CLI app that searches for stock info.
 
 require 'net/http'

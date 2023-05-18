@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 # This Ruby CLI app will returns latest version and releases date when input github link of that application
 
 require 'json'

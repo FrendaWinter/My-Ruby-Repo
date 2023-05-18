@@ -4,6 +4,7 @@
 
 require 'json'
 require 'sinatra'
+require 'puma'
 
 def show_help
     puts

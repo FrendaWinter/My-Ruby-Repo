@@ -2,9 +2,19 @@
 
 source "https://rubygems.org"
 
-gem 'rails', '~> 7.0', '>= 7.0.4.3'
+# Web Scraping gem
 gem 'rest-client', '~> 1.8'
+gem 'net-http'
+gem 'nokogiri'
+
+# Utils gem
+gem 'json'
+gem 'date'
+
+# Finance gem
 gem 'money'
 gem 'eu_central_bank'
+
+# Gem for build API server
 gem 'sinatra'
 gen 'puma'

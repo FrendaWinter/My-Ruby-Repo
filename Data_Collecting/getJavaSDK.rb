@@ -1,3 +1,9 @@
+#!/usr/bin/env ruby
+
+# This Ruby CLI app will returns latest version, releases date, download links of Java SDK
+
+# Following JDK release notes: https://www.oracle.com/java/technologies/javase/jdk-relnotes-index.html
+
 require 'json'
 require 'nokogiri'
 require 'restclient'
