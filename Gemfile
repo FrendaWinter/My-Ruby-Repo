@@ -10,10 +10,12 @@ gem 'nokogiri'
 # Utils gem
 gem 'json'
 gem 'date'
+gem 'optparse'
 
 # Finance gem
 gem 'money'
 gem 'eu_central_bank'
+gem 'creditcard'
 
 # Gem for build API server
 gem 'sinatra'
