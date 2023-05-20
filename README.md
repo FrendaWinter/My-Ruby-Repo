@@ -76,7 +76,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 
 # 🙏 Support
 
-We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
+We all need support and motivation. `fwScript` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
 
 If you found the app helpful, consider supporting us with a coffee.
 
