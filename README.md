@@ -35,25 +35,25 @@
 
 ## Utils script
 
-* `currencyConverter.rb` ~ CLI app for currency conversion
-* `getVersionFromFile.rb` ~ CLI app that return file version when you input the download link or file path
-* `timeConverter.rb` ~ CLI app for Time conversion
-* `youtubeDownloader.rb` ~ CLI App the return mp4 file of Youtube link
-* `checkValidCreditCard.rb` ~ CLI App for check valid credit card
+* [[currencyConverter.rb]](/Utils/currencyConverter.rb)~ CLI app for currency conversion
+* [[getVersionFromFile.rb]](/Utils/getVersionFromFile.rb) ~ CLI app that return file version when you input the download link or file path
+* [[timeConverter.rb]](/Utils/timeConverter.rb) ~ CLI app for Time conversion
+* [[youtubeDownloader.rb]](/Utils/youtubeDownloader.rb) ~ CLI App the return mp4 file of Youtube link
+* [[checkValidCreditCard.rb]](/Utils/checkValidCreditCard.rb) ~ CLI App for check valid credit card
 
 ## Data Collecting
 
 **Each script returns some usefull infomation that you need from the web**
 
-* `getLatestVersionOfAppOnGitHub.rb` ~ CLI app will returns latest version and releases date when input github link of that application
-* `getJavaSDK` ~ CLI apps will returns latest version, releases date, download link of latest Java SDK
-* `getWeather.rb` ~ CLI app will returns the weather information of the input city name
-* `movieSearch.rb` ~ CLI app that searched movies and returns info
-* `stockSearch.rb` ~ CLI app that searches stock info.
+* [[getLatestVersionOfAppOnGitHub.rb]](/Data_Collecting/getLatestVersionOfAppOnGitHub.rb) ~ CLI app will returns latest version and releases date when input github link of that application
+* [[getJavaSDK]](/Data_Collecting/getJavaSDK.rb) ~ CLI apps will returns latest version, releases date, download link of latest Java SDK
+* [[getWeather.rb]](/Data_Collecting/getWeather.rb) ~ CLI app will returns the weather information of the input city name
+* [[movieSearch.rb]](/Data_Collecting/movieSearch.rb) ~ CLI app that searched movies and returns info
+* [[stockSearch.rb]](/Data_Collecting/stockSearch.rb) ~ CLI app that searches stock info.
   
 ## Network
  
-* `webhook.rb` ~ Simple webhook server
+* [[webhook.rb]](/Network/webhook.rb) ~ Simple webhook server
 ---
 
 # 🏗️ How to Set up `fwScript`
