@@ -11,6 +11,7 @@ gem 'nokogiri'
 gem 'json'
 gem 'date'
 gem 'optparse'
+gem 'openssl'
 
 # Finance gem
 gem 'money'
