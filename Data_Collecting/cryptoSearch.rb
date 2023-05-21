@@ -254,6 +254,36 @@ test_key = '8DBDD7AE-5A8C-4D15-B854-C8A59AF75300'
 
 api = CoinAPIv1::Client.new(api_key: test_key)
 
+$result = {}
+
+options = {}
+OptionParser.new do |opts|
+    opts.banner = "Usage: cryptoSearch.rb [options]"
+
+    opts.on("-o FILEPATH", "--output", "Run verbosely") do |filePath|
+        options[:filePath] = filePath
+    end
+
+    opts.on("-h", "--help", "Prints help") do
+        puts opts
+        exit
+    end
+end.parse!
+
+exchange_rate = api.exchange_rates_get_specific_rate(asset_id_base: 'BTC',
+                                                     asset_id_quote: 'USD')
+$result[:"BTC to USD"] = exchange_rate
+
+if options[:filePath]
+    begin
+        File.write(options[:filePath], JSON.pretty_generate($result))
+    rescue Errno::ENOENT => e
+        puts "Error: #{e.message}"
+    end
+else 
+    puts JSON.pretty_generate($result)
+end
+
 # exchanges = api.metadata_list_all_exchanges()
 # puts 'Exchanges'
 # for exchange in exchanges
@@ -271,34 +301,27 @@ api = CoinAPIv1::Client.new(api_key: test_key)
 #   puts "Asset type (crypto?): #{asset[:type_is_crypto]}"
 # end
 
-# symbols = api.metadata_list_all_symbols
-# puts 'Symbols'
+symbols = api.metadata_list_all_symbols
+puts 'Symbols'
 
-# for symbol in symbols
-#   puts "Symbol ID: #{symbol[:symbol_id]}"
-#   puts "Exchange ID: #{symbol[:exchange_id]}"
-#   puts "Symbol type: #{symbol[:symbol_type]}"
-#   puts "Asset ID base: #{symbol[:asset_id_base]}"
-#   puts "Asset ID quote: #{symbol[:asset_id_quote]}"
+for symbol in symbols
+  puts "Symbol ID: #{symbol[:symbol_id]}"
+  puts "Exchange ID: #{symbol[:exchange_id]}"
+  puts "Symbol type: #{symbol[:symbol_type]}"
+  puts "Asset ID base: #{symbol[:asset_id_base]}"
+  puts "Asset ID quote: #{symbol[:asset_id_quote]}"
 
-#   if (symbol['symbol_type'] == 'FUTURES')
-#     puts "Future delivery time: #{symbol[:future_delivery_time]}"
-#   end
-#   if (symbol['symbol_type'] == 'OPTION')
-#     puts "Option type is call: #{symbol[:option_type_is_call]}"
-#     puts "Option strike price: #{symbol[:option_strike_price]}"
-#     puts "Option contract unit: #{symbol[:option_contract_unit]}"
-#     puts "Option exercise style: #{symbol[:option_exercise_style]}"
-#     puts "Option expiration time: #{symbol[:option_expiration_time]}"
-#   end
-# end
-
-exchange_rate = api.exchange_rates_get_specific_rate(asset_id_base: 'BTC',
-                                                     asset_id_quote: 'USD')
-puts "Time: #{exchange_rate[:time]}"
-puts "Base: #{exchange_rate[:asset_id_base]}"
-puts "Quote: #{exchange_rate[:asset_id_quote]}"
-puts "Rate: #{exchange_rate[:rate]}"
+  if (symbol['symbol_type'] == 'FUTURES')
+    puts "Future delivery time: #{symbol[:future_delivery_time]}"
+  end
+  if (symbol['symbol_type'] == 'OPTION')
+    puts "Option type is call: #{symbol[:option_type_is_call]}"
+    puts "Option strike price: #{symbol[:option_strike_price]}"
+    puts "Option contract unit: #{symbol[:option_contract_unit]}"
+    puts "Option exercise style: #{symbol[:option_exercise_style]}"
+    puts "Option expiration time: #{symbol[:option_expiration_time]}"
+  end
+end
 
 # last_week = DateTime.iso8601('2017-05-23').to_s
 # exchange_rate_last_week = api.exchange_rates_get_specific_rate(asset_id_base: 'BTC',
