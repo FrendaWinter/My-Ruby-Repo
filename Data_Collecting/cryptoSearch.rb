@@ -252,16 +252,43 @@ end
 
 test_key = '8DBDD7AE-5A8C-4D15-B854-C8A59AF75300'
 
-api = CoinAPIv1::Client.new(api_key: test_key)
-
+$api = CoinAPIv1::Client.new(api_key: test_key)
 $result = {}
 
-options = {}
+$options = {}
 OptionParser.new do |opts|
     opts.banner = "Usage: cryptoSearch.rb [options]"
 
-    opts.on("-o FILEPATH", "--output", "Run verbosely") do |filePath|
-        options[:filePath] = filePath
+    opts.on("-o FILEPATH", "--output", "Write result into output") do |filePath|
+        $options[:filePath] = filePath
+    end
+
+    # Exchange session
+    opts.on( "-e", "--exchange", "Option for turn on exchange mode ~ get rate of the coin you want. Default is false.") do |e|
+        $options[:exchange] = e
+    end
+
+    opts.on("--base BASE", "-b", "Option for input the base for exchange rate") do |base|
+        $options[:base] = base
+    end
+
+    opts.on("--quote QUOTE", "-q", "Option for input the quote for exchange rate") do |quote|
+        $options[:quote] = quote
+    end
+
+    # Symbol session
+    opts.on("--symbol SYMBOL_ID", "-s", "Option for turn on and input symbol ID ~ get trade info with SYMBOL_ID") do |symbolID|
+        $options[:symbolID] = symbolID
+    end
+
+    opts.on("--period PERIOD", "-p", "Option for input the period of the trade, must have SYMBOL_ID input") do |period|
+        $options[:period] = period
+    end
+
+    # Utils
+    # For both exchange and sym --time-start
+    opts.on("-t TIME", "--time", "Options for input the time where record start") do |time|
+        $options[:time] = time
     end
 
     opts.on("-h", "--help", "Prints help") do
@@ -270,13 +297,30 @@ OptionParser.new do |opts|
     end
 end.parse!
 
-exchange_rate = api.exchange_rates_get_specific_rate(asset_id_base: 'BTC',
-                                                     asset_id_quote: 'USD')
-$result[:"BTC to USD"] = exchange_rate
+remainOption = ARGV.pop
+if remainOption
+    puts
+    puts "Unkhown option [#{remainOption}], please using defined option, print help (--help) for more information"
+    puts
+    exit false
+end
 
-if options[:filePath]
+def exchangeExecutor
+  begin
+    exchange_rate = $api.exchange_rates_get_specific_rate(asset_id_base: $options[:base], asset_id_quote: $options[:quote])
+    $result[:"#{$options[:base]} to #{$options[:quote]}"] = exchange_rate
+  rescue => e
+    $result[:error] = e.message
+    $result[:backTrace] = e.backtrace
+  end
+end
+
+exchangeExecutor
+
+# Write input into file
+if $options[:filePath]
     begin
-        File.write(options[:filePath], JSON.pretty_generate($result))
+        File.write($options[:filePath], JSON.pretty_generate($result))
     rescue Errno::ENOENT => e
         puts "Error: #{e.message}"
     end
@@ -301,27 +345,27 @@ end
 #   puts "Asset type (crypto?): #{asset[:type_is_crypto]}"
 # end
 
-symbols = api.metadata_list_all_symbols
-puts 'Symbols'
+# symbols = api.metadata_list_all_symbols
+# puts 'Symbols'
 
-for symbol in symbols
-  puts "Symbol ID: #{symbol[:symbol_id]}"
-  puts "Exchange ID: #{symbol[:exchange_id]}"
-  puts "Symbol type: #{symbol[:symbol_type]}"
-  puts "Asset ID base: #{symbol[:asset_id_base]}"
-  puts "Asset ID quote: #{symbol[:asset_id_quote]}"
+# for symbol in symbols
+#   puts "Symbol ID: #{symbol[:symbol_id]}"
+#   puts "Exchange ID: #{symbol[:exchange_id]}"
+#   puts "Symbol type: #{symbol[:symbol_type]}"
+#   puts "Asset ID base: #{symbol[:asset_id_base]}"
+#   puts "Asset ID quote: #{symbol[:asset_id_quote]}"
 
-  if (symbol['symbol_type'] == 'FUTURES')
-    puts "Future delivery time: #{symbol[:future_delivery_time]}"
-  end
-  if (symbol['symbol_type'] == 'OPTION')
-    puts "Option type is call: #{symbol[:option_type_is_call]}"
-    puts "Option strike price: #{symbol[:option_strike_price]}"
-    puts "Option contract unit: #{symbol[:option_contract_unit]}"
-    puts "Option exercise style: #{symbol[:option_exercise_style]}"
-    puts "Option expiration time: #{symbol[:option_expiration_time]}"
-  end
-end
+#   if (symbol['symbol_type'] == 'FUTURES')
+#     puts "Future delivery time: #{symbol[:future_delivery_time]}"
+#   end
+#   if (symbol['symbol_type'] == 'OPTION')
+#     puts "Option type is call: #{symbol[:option_type_is_call]}"
+#     puts "Option strike price: #{symbol[:option_strike_price]}"
+#     puts "Option contract unit: #{symbol[:option_contract_unit]}"
+#     puts "Option exercise style: #{symbol[:option_exercise_style]}"
+#     puts "Option expiration time: #{symbol[:option_expiration_time]}"
+#   end
+# end
 
 # last_week = DateTime.iso8601('2017-05-23').to_s
 # exchange_rate_last_week = api.exchange_rates_get_specific_rate(asset_id_base: 'BTC',
@@ -333,6 +377,7 @@ end
 # puts "Quote: #{exchange_rate_last_week[:asset_id_quote]}"
 # puts "Rate: #{exchange_rate_last_week[:rate]}"
 
+# All curent rate of all other coin with this
 # current_rates = api.exchange_rates_get_all_current_rates(asset_id_base: 'BTC')
 
 # for rate in current_rates
@@ -352,6 +397,7 @@ end
 #   puts "Display name: #{period[:display_name]}"
 # end
 
+# Get latest trade info of symbol
 # ohlcv_latest = api.ohlcv_latest_data(symbol_id: 'BITSTAMP_SPOT_BTC_USD',
 #                                      period_id: '1MIN')
 
