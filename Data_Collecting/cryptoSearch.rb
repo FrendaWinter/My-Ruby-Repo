@@ -250,18 +250,15 @@ module CoinAPIv1
   end
 end
 
-test_key = '8DBDD7AE-5A8C-4D15-B854-C8A59AF75300'
+# Get your apikey at https://www.coinapi.io/
+test_key = '*******************************' # YOUR API KEY
 
 $api = CoinAPIv1::Client.new(api_key: test_key)
 $result = {}
 
 $options = {}
 OptionParser.new do |opts|
-    opts.banner = "Usage: cryptoSearch.rb [options]"
-
-    opts.on("-o FILEPATH", "--output", "Write result into output") do |filePath|
-        $options[:filePath] = filePath
-    end
+    opts.banner = "Usage: cryptoSearch.rb [options] [argument]"
 
     # Exchange session
     opts.on( "-e", "--exchange", "Option for turn on exchange mode ~ get rate of the coin you want. Default is false.") do |e|
@@ -291,8 +288,26 @@ OptionParser.new do |opts|
         $options[:time] = time
     end
 
+    opts.on("-o FILEPATH", "--output", "Write result into output") do |filePath|
+        $options[:filePath] = filePath
+    end
+    
     opts.on("-h", "--help", "Prints help") do
         puts opts
+        puts
+        puts <<~TEXT
+        Exemple: 
+          Get Bitcoin current price in USD:           ruby cryptoSearch.rb -e -b BTC -q USD
+          Get Bitcoin price in USD on specific date:  ruby cryptoSearch.rb -e -b BTC -q USD -t '2016-01-01'
+          Get all rate of Bitcoin price:              ruby cryptoSearch.rb -e -b BTC
+
+          Get exchange rate BTC->USD with SYMBOL ID within period:
+          - Get current exchange rate with period is 1 minute:        ruby cryptoSearch.rb -s BITSTAMP_SPOT_BTC_USD -p '1MIN'
+          - Get all record from 2016 to now, with period is 1 year:   ruby cryptoSearch.rb -s BITSTAMP_SPOT_BTC_USD -p '1YRS' -t '2016-01-01'
+
+          If you want me to adding anything, please contact me with email: manhduongx@gmail.com
+          --- That all of it, Have Fun!! ---
+        TEXT
         exit
     end
 end.parse!
@@ -330,17 +345,19 @@ end
 
 def symbolExecutor
   begin
-    $result[:result] = Array.new
-    unless $options[:time].nil? then 
-      time = DateTime.iso8601($options[:time]).to_s
-      ohlcv_historical = $api.ohlcv_historical_data(symbol_id: $options[:symbolID], period_id: $options[:period], time_start: time)
-      for data_point in ohlcv_historical
-        $result[:result].push data_point
-      end
-    else
-      ohlcv_latest = $api.ohlcv_latest_data(symbol_id: $options[:symbolID], period_id: $options[:period])
-      for data_point in ohlcv_latest
-        $result[:result].unshift data_point
+    if $options[:symbolID] then
+      $result[:result] = Array.new
+      unless $options[:time].nil? then 
+        time = DateTime.iso8601($options[:time]).to_s
+        ohlcv_historical = $api.ohlcv_historical_data(symbol_id: $options[:symbolID], period_id: $options[:period], time_start: time)
+        for data_point in ohlcv_historical
+          $result[:result].push data_point
+        end
+      else
+        ohlcv_latest = $api.ohlcv_latest_data(symbol_id: $options[:symbolID], period_id: $options[:period])
+        for data_point in ohlcv_latest
+          $result[:result].unshift data_point
+        end
       end
     end
   rescue => e
@@ -358,6 +375,8 @@ if $options[:filePath]
     rescue Errno::ENOENT => e
         puts "Error: #{e.message}"
     end
-else 
-    puts JSON.pretty_generate($result)
+else
+    unless $result.empty? then
+      puts JSON.pretty_generate($result)
+    end
 end

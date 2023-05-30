@@ -20,4 +20,4 @@ gem 'creditcard'
 
 # Gem for build API server
 gem 'sinatra'
-gen 'puma'
+gem 'puma'
