@@ -11,6 +11,7 @@ gem 'nokogiri'
 gem 'json'
 gem 'date'
 gem 'optparse'
+gem 'openssl'
 
 # Finance gem
 gem 'money'
@@ -19,4 +20,4 @@ gem 'creditcard'
 
 # Gem for build API server
 gem 'sinatra'
-gen 'puma'
+gem 'puma'
