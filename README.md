@@ -24,7 +24,6 @@
   - [Data Collecting](#data-collecting)
   - [Network](#network)
 - [🏗️ How to Set up `fwScript`](#️-how-to-set-up-fwscript)
-  - [Gem used](#gem-used)
 - [🛡️ License](#️-license)
 - [🙏 Support](#-support)
 - [☎️ FAQ / Contact](#️-faq--contact)
@@ -35,7 +34,10 @@
 
 ## Utils script
 
-* [[currencyConverter.rb]](/Utils/currencyConverter.rb)~ CLI app for currency conversion
+* [[currencyConverter.rb]](/Utils/currencyConverter.rb)~ CLI app for currency conversion 
+
+![Imgur](https://i.imgur.com/ihwlUNR.png)
+
 * [[getVersionFromFile.rb]](/Utils/getVersionFromFile.rb) ~ CLI app that return file version when you input the download link or file path
 * [[timeConverter.rb]](/Utils/timeConverter.rb) ~ CLI app for Time conversion
 * [[youtubeDownloader.rb]](/Utils/youtubeDownloader.rb) ~ CLI App the return mp4 file of Youtube link
@@ -62,10 +64,6 @@
 gem install bundler
 bundler install
 ```
-
-## Gem used
-
-* [Ruby Rails](https://rubygems.org/gems/rails) ~ Ruby gem for full-stack web development
 
 ---
 
