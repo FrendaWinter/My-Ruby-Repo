@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gem 'rest-client', '~> 1.8'
 gem 'net-http'
 gem 'nokogiri'
+gem 'uri'
 
 # Utils gem
 gem 'json'
