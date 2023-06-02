@@ -200,7 +200,7 @@ end
     @param: outputFormat The Input format is actually a regex and should be treated as such
     @return: String that match contents or return error message
 =end
-def ConvertTimeString(strTime, inputFormat, outputFormat = '%m/%d/%Y')
+def convertTimeString(strTime, inputFormat, outputFormat = '%m/%d/%Y')
     begin
         output = 0
         
@@ -228,4 +228,4 @@ while arg = ARGV.shift do
     end
 end
 
-puts ConvertTimeString(@strTime, @inputFormat, @outputFormat)
+puts convertTimeString(@strTime, @inputFormat, @outputFormat)

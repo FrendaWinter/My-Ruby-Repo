@@ -21,3 +21,6 @@ gem 'creditcard'
 # Gem for build API server
 gem 'sinatra'
 gem 'puma'
+
+# Tasking (test)
+gem 'rake'
