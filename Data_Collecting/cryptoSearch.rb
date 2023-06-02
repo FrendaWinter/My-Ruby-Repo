@@ -2,7 +2,7 @@
 
 # Still in development
 
-# CLI app will search for price of given crypto
+# CLI app will search for price, covert or view infomation of given crypto
 
 require 'net/http'
 require 'openssl'
