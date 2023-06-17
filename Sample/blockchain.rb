@@ -14,6 +14,10 @@ class Blockchain
         create_block(1, '0') # Create genesis block with proof = 1, prev_hash = 0
     end
 
+    def chain
+        @@chain
+    end
+
     def create_block(proof, prev_hash)
         block = {
             :index => @@chain.length() +1,
@@ -40,8 +44,9 @@ class Blockchain
             hash = Digest::SHA256.hexdigest((new_proof.abs2 - pre_proof.abs2).to_s)
             if hash.slice(0, 4) == '0000'
                 check_proof = true
+            else
+                new_proof += 1
             end
-            new_proof += 1
         end
         return new_proof
     end
@@ -56,7 +61,7 @@ class Blockchain
             end
             previous_proof = prev_block[:proof]
             proof = block[:proof]
-            if Digest::SHA256.hexdigest(proof.abs2 - previous_proof.abs2).slice(0, 4) != '0000'then
+            if Digest::SHA256.hexdigest((proof.abs2 - previous_proof.abs2).to_s).slice(0, 4) != '0000' then
                 return false
             end
             prev_block = block
@@ -68,7 +73,7 @@ end
 
 # Part 2 - Mining our Blockchain
 
-# Creating a Web App 
+# Web App running with Sinatra and Puma
 # Creating a Blockchain
 blockchain = Blockchain.new
 
@@ -86,24 +91,25 @@ get '/mine_block' do
         :'proof' => block[:'proof'],
         :'previous_hash' => block[:'prev_hash']
     }
-    return JSON.pretty_generate(response).to_s
+    return JSON.pretty_generate(response)
 end
 
-get '/get_chain' do
-    response = {'chain': blockchain.chain,
-            'length': len(blockchain.chain)}
-    return jsonify(response), 200
-end
-
-# get '/is_valid' do
-#     is_valid = blockchain.is_chain_valid(blockchain.chain)
-#     if is_valid
-#         response = {'message': 'All good. The Blockchain is valid.'}
-#     else
-#         response = {'message': 'Houston, we have a problem. The Blockchain is not valid.'}
-#         return jsonify(response), 200
-#     end
-# end
 # Getting the full Blockchain
+get '/get_chain' do
+    response = {
+        :'chain' => blockchain.chain,
+        :'length' => blockchain.chain.length
+    }
+    return JSON.pretty_generate(response)
+end
+
 # Checking if the Blockchain is valid
-# Running the app
+get '/is_valid' do
+    is_valid = blockchain.is_chain_valid
+    if is_valid
+        response = {:'message' => 'All good. The Blockchain is valid.'}
+    else
+        response = {:'message' => 'Houston, we have a problem. The Blockchain is not valid.'}
+    end
+    return JSON.pretty_generate(response)
+end
