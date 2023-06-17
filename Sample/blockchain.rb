@@ -6,66 +6,104 @@
 require 'digest'
 require 'json'
 require 'sinatra'
+require 'puma'
 
 class Blockchain
-    @chain = Array.new
-
+    @@chain = Array.new
     def initialize
         create_block(1, '0') # Create genesis block with proof = 1, prev_hash = 0
     end
 
     def create_block(proof, prev_hash)
         block = {
-            :index => @chain.length +1,
+            :index => @@chain.length() +1,
             :timestamp => Time.now,
             :proof => proof,
             :prev_hash => prev_hash
         }
-        @chain.push(block)
+        @@chain.append(block)
         return block
     end
 
-    def get_prev_block()
-        return @chain[-1]
+    def get_prev_block
+        return @@chain[-1]
     end
 
-    def proof_of_work()
+    def hash block
+        return Digest::SHA256.hexdigest((block).to_s)
+    end
+
+    def proof_of_work pre_proof
         new_proof = 1
         check_proof = false
         while !check_proof
-            Digest::SHA256.hexdigest @chain[-1].to_s
+            hash = Digest::SHA256.hexdigest((new_proof.abs2 - pre_proof.abs2).to_s)
+            if hash.slice(0, 4) == '0000'
+                check_proof = true
+            end
+            new_proof += 1
         end
-    end
-
-    def hash(block)
-        Digest::SHA256.hexdigest block.to_s
+        return new_proof
     end
 
     def is_chain_valid
-        prev_block = @chain[0]
+        prev_block = @@chain[0]
         block_index = 1
-        while block_index < @chain.length
-            block = @chain[block_index]
+        while block_index < @@chain.length
+            block = @@chain[block_index]
             if block[:prev_hash] != hash(prev_block) then
                 return false
             end
-
+            previous_proof = prev_block[:proof]
+            proof = block[:proof]
+            if Digest::SHA256.hexdigest(proof.abs2 - previous_proof.abs2).slice(0, 4) != '0000'then
+                return false
+            end
+            prev_block = block
             block_index += 1
         end
         return true
     end
 end
 
-blockchain = Blockchain.new
-
-p blockchain
-
-
 # Part 2 - Mining our Blockchain
 
-# Creating a Web App
+# Creating a Web App 
 # Creating a Blockchain
+blockchain = Blockchain.new
+
 # Mining a new block
+get '/mine_block' do
+    previous_block = blockchain.get_prev_block()
+    previous_proof = previous_block[:'proof']
+    proof = blockchain.proof_of_work(previous_proof)
+    previous_hash = blockchain.hash(previous_block)
+    block = blockchain.create_block(proof, previous_hash)
+    response = {
+        :'message' => 'Congratulations, you just mined a block!',
+        :'index' => block[:'index'],
+        :'timestamp' => block[:'timestamp'],
+        :'proof' => block[:'proof'],
+        :'previous_hash' => block[:'prev_hash']
+    }
+    return JSON.pretty_generate(response).to_s
+end
+
+get '/get_chain' do
+    response = {'chain': blockchain.chain,
+            'length': len(blockchain.chain)}
+    return jsonify(response), 200
+end
+
+# get '/is_valid' do
+#     is_valid = blockchain.is_chain_valid(blockchain.chain)
+#     if is_valid
+#         response = {'message': 'All good. The Blockchain is valid.'}
+#     else
+#         response = {'message': 'Houston, we have a problem. The Blockchain is not valid.'}
+#         return jsonify(response), 200
+#     end
+# end
 # Getting the full Blockchain
 # Checking if the Blockchain is valid
 # Running the app
