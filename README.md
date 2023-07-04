@@ -6,7 +6,7 @@
 
 ![Imgur](https://i.imgur.com/PZjUHDE.png)
 
-<h1> fwScript </h1>
+<h1> Ruby-Script </h1>
 
 <h2>This repo is A collection of my useful scripts for command line lover.</h2>
 <br></br>
@@ -22,7 +22,7 @@
 - [🔥 Features](#-features)
   - [Utils script](#utils-script)
   - [Data Collecting](#data-collecting)
-  - [Network](#network)
+  - [Sample](#sample)
 - [🏗️ How to Set up `fwScript`](#️-how-to-set-up-fwscript)
 - [🛡️ License](#️-license)
 - [🙏 Support](#-support)
@@ -55,11 +55,12 @@
 * [[movieSearch.rb]](/Data_Collecting/movieSearch.rb) ~ CLI app that searched movies and returns info
 * [[stockSearch.rb]](/Data_Collecting/stockSearch.rb) ~ CLI app that searches stock info.
   
-## Network
- 
-* [[webhook.rb]](/Network/webhook.rb) ~ Simple webhook server
----
+## Sample
 
+* [[webhook.rb]](/Sample/webhook.rb) ~ Simple webhook server
+* [[blockchain.rb]](/Sample/blockchain.rb) ~ Simple example of blockchain
+
+---
 # 🏗️ How to Set up `fwScript`
 
 ```ruby
