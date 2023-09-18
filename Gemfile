@@ -19,5 +19,6 @@ gem 'eu_central_bank'
 gem 'creditcard'
 
 # Gem for build API server
+gem 'rubocop', group: 'development', require: false
 gem 'sinatra'
 gem 'puma'

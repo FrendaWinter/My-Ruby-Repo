@@ -1,52 +1,51 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'uri'
 
 def show_help
-    puts <<~TEXT
-        CLI that return the last modification time of that website, if can't get the time, return 0.
+  puts <<~TEXT
+          CLI that return the last modification time of that website, if can't get the time, return 0.
 
-		Usage: ruby getLastModifyTime.rb https://www.youtube.com/?gl=VN 
+    Usage: ruby getLastModifyTime.rb https://www.youtube.com/?gl=VN#{' '}
 
-        => Fri, 02 Jun 2023 03:52:54 GMT
+          => Fri, 02 Jun 2023 03:52:54 GMT
 
-		--- That all of it, Have Fun!! ----
+    --- That all of it, Have Fun!! ----
 
-    TEXT
+  TEXT
 end
 
 def	getLastModifiedTimeHttp(url)
-    begin
-        _uri=URI.parse(url)
-        _http = Net::HTTP.new(_uri.host, _uri.port)
-        # Toggle SSL when needed
-        if _uri.scheme == "https"
-            _http.use_ssl = true
-            _http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        end
-        # Start Http request
-        _http.start {
-            _resp1 = _http.request_head(_uri.request_uri)
-            _lastModifiedTime =_resp1.header['Last-Modified']
-            if _lastModifiedTime == nil
-                _lastModifiedTime = _resp1.header['Date']
-            end
-            return _lastModifiedTime
-        }
-    rescue => err
-        return 0
-    end
+  uri = URI.parse(url)
+  http = Net::HTTP.new(uri.host, uri.port)
+  # Toggle SSL when needed
+  if uri.scheme == 'https'
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  end
+  # Start Http request
+  http.start do
+    resp1 = http.request_head(uri.request_uri)
+    last_modified_time = resp1.header['Last-Modified']
+    last_modified_time = resp1.header['Date'] if last_modified_time.nil?
+    return last_modified_time
+  end
+rescue StandardError => e
+    puts "#{e.message}"
 end
 
-@urls = Array.new
+@urls = []
 
 show_help if ARGV.empty?
-while arg = ARGV.shift do
-    case arg
-        when "--help" then show_help; exit
-        else @urls << arg
-    end
+while (arg = ARGV.shift)
+  case arg
+  when '--help' then show_help
+                     exit
+  else @urls << arg
+  end
 end
 
 @urls.each do |url|
-    puts getLastModifiedTimeHttp(url)   
+  puts getLastModifiedTimeHttp(url)
 end

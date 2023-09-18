@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # CLI App for check valid credit card
 
@@ -7,35 +8,32 @@ require 'optparse'
 
 options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: checkValidCreditCard.rb [options]"
+  opts.banner = 'Usage: checkValidCreditCard.rb [options]'
 
-  opts.on("-c", "--check CARD", "Check credit card") do |card|
+  opts.on('-c', '--check CARD', 'Check credit card') do |card|
     options[:card] = card
   end
 end.parse!
 
-remainOption = ARGV.pop
-if remainOption
-    puts
-    puts "Invalid option [#{remainOption}], please using '-c CARD' or '--check CARD'"
-    puts
-    exit false
+remain_option = ARGV.pop
+if remain_option
+  puts
+  puts "Invalid option [#{remain_option}], please using '-c CARD' or '--check CARD'"
+  puts
+  exit false
 end
 begin
-    if !options[:card].empty? && options[:card].creditcard?
-        puts
-        puts "Credit card number: #{options[:card]}"
-        puts "=> Valid: True"
-        puts "=> Type: #{options[:card].creditcard_type}"
-        puts
-    else
-        puts
-        puts "Credit card number: #{options[:card]}"
-        puts "=> Valid: False"
-        puts
-    end
-rescue => e
-    puts
-    puts "Error: #{e.message}"
-    puts
+  puts
+  puts "Credit card number: #{options[:card]}"
+  if !options[:card].empty? && options[:card].creditcard?
+    puts '=> Valid: True'
+    puts "=> Type: #{options[:card].creditcard_type}"
+  else
+    puts '=> Valid: False'
+  end
+  puts
+rescue StandardError => e
+  puts
+  puts "Error: #{e.message}"
+  puts
 end
