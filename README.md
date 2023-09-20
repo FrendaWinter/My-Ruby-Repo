@@ -25,7 +25,6 @@
   - [Sample](#sample)
 - [🏗️ How to Set up `fwScript`](#️-how-to-set-up-fwscript)
 - [🛡️ License](#️-license)
-- [🙏 Support](#-support)
 - [☎️ FAQ / Contact](#️-faq--contact)
 
 ---
@@ -72,18 +71,6 @@ bundler install
 
 # 🛡️ License
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
-
----
-
-# 🙏 Support
-
-We all need support and motivation. `fwScript` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
-
-If you found the app helpful, consider supporting us with a coffee.
-
-<a href="https://bmc.link/frenda">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50px">
-</a>
 
 ---
 
